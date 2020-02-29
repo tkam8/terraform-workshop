@@ -42,6 +42,10 @@ resource "aws_instance" "hello-tf-instance" {
   ami = var.ami
   count = var.hello_tf_instance_count
   instance_type = var.hello_tf_instance_type
+
+  tags = {
+    Name = var.instance_name
+  }
 }
 
 EOF
@@ -178,6 +182,7 @@ variable "secret_key" {}
 variable "session_token" {}
 variable "region" {}
 variable "ami" {}
+variable "instance_name" {}
 variable "hello_tf_instance_count" {
     default = 1
 }
@@ -249,7 +254,7 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 >$ aws configure
 >AWS Access Key ID [****************]: ****************
 >AWS Secret Access Key [****************]: ****************
->Default region name [ap-northeast-1]:
+>Default region name [ap-southeast-1]:
 >Default output format [json]:
 >```
 
@@ -268,8 +273,9 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 $ export TF_VAR_access_key=************
 $ export TF_VAR_secret_key=************
 $ export TF_VAR_session_token=*********
-$ export TF_VAR_region=ap-northeast-1
-$ export TF_VAR_ami=ami-06d9ad3f86032262d
+$ export TF_VAR_instance_name=<enteryourname>
+$ export TF_VAR_region=ap-southeast-1
+$ export TF_VAR_ami=ami-07ce5f60a39f1790e
 $ terraform plan
 $ terraform apply
 ```
@@ -280,7 +286,7 @@ $ terraform apply
 $ export TF_VAR_gcp_key=PATH_TO_KEY_JSON
 $ export TF_VAR_machine_type=f1-micro
 $ export TF_VAR_image=debian-cloud/debian-9
-$ export TF_VAR_project=YOUT_PROJECT
+$ export TF_VAR_project=YOUR_PROJECT
 $ terraform plan
 $ terraform apply
 ```
