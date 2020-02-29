@@ -11,7 +11,7 @@ $ unzip terraform*.zip
 $ chmod + x terraform
 $ mv terraform /usr/local/bin
 $ terraform -version
-Terraform v0.12.6
+Terraform v0.12.21
 ```
 
 次に任意の作業用ディレクトリを作ります。
@@ -34,7 +34,8 @@ terraform {
 provider "aws" {
 	access_key = var.access_key
 	secret_key = var.secret_key
-	region = var.region
+  token      = var.session_token
+	region     = var.region
 }
 
 resource "aws_instance" "hello-tf-instance" {
@@ -174,6 +175,7 @@ EOF
 $ cat << EOF > variables.tf
 variable "access_key" {}
 variable "secret_key" {}
+variable "session_token" {}
 variable "region" {}
 variable "ami" {}
 variable "hello_tf_instance_count" {
@@ -265,6 +267,7 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
 ```shell
 $ export TF_VAR_access_key=************
 $ export TF_VAR_secret_key=************
+$ export TF_VAR_session_token=*********
 $ export TF_VAR_region=ap-northeast-1
 $ export TF_VAR_ami=ami-06d9ad3f86032262d
 $ terraform plan
