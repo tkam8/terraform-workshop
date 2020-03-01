@@ -32,15 +32,15 @@
 
     .. code-block:: bash
 
-    $ mkdir -p tf-workspace/hello-tf
-    $ cd  tf-workspace/hello-tf
+        $ mkdir -p tf-workspace/hello-tf
+        $ cd  tf-workspace/hello-tf
 
 **Terraform Configuration Files**: 
 ------------------
 
 #. 早速このフォルダにTerraformのコンフィグファイルを作ってみます。コンフィグファイルは`HashiCorp Configuration Language`というフレームワークを使って記述していきます。
 
-`main.tf`と`vaiables.tf`という二つのファイルを作ってみます。`main.tf`はその名の通りTerraformのメインのファイルで、このファイルに記述されている内容がTerraformで実行されます。`variables.tf`は変数を定義するファイルです。各変数にはデフォルト値や型などを指定できます。
+    `main.tf`と`vaiables.tf`という二つのファイルを作ってみます。`main.tf`はその名の通りTerraformのメインのファイルで、このファイルに記述されている内容がTerraformで実行されます。`variables.tf`は変数を定義するファイルです。各変数にはデフォルト値や型などを指定できます。
 
     .. code-block:: bash
 
@@ -111,29 +111,27 @@
 
     .. code-block:: bash
 
-    $ aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId,State:State,Name:Tags[?
-    Key=='Name']|[0].Value}"
+        $ aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId,State:State,Name:Tags[?
+        Key=='Name']|[0].Value}"
 
 
     .. note::　aws cliにログイン出来ていない場合、以下のコマンドでログインしてください。
-    　　.. code-block:: bash
-
-        　　 $ aws configure
-            AWS Access Key ID [****************]: ****************
-            AWS Secret Access Key [****************]: ****************
-            Default region name [ap-southeast-1]:
-            Default output format [json]:
+    　　 $ aws configure
+        AWS Access Key ID [****************]: ****************
+        AWS Secret Access Key [****************]: ****************
+        Default region name [ap-southeast-1]:
+        Default output format [json]:
 
 #. `plan`はTerraformによるプロビジョニングの実行プランを計画します。実際の環境やステートファイルとの差分を検出し、どのリソースにどのような変更を行うかを確認することができます。`apply`はプランに基づいたプロビジョニングの実施をするためのコマンドです。
 
-また、実行前に変数に値をセットする必要があります。方法としては
+    また、実行前に変数に値をセットする必要があります。方法としては
 
-- `tfvars`というファイルの中で定義する
-- `terraform apply -vars=***`という形でCLIの引数で定義する
-- `TF_VAR_***`という環境変数で定義する
-- Plan中に対話式で入力して定義する
+    - `tfvars`というファイルの中で定義する
+    - `terraform apply -vars=***`という形でCLIの引数で定義する
+    - `TF_VAR_***`という環境変数で定義する
+    - Plan中に対話式で入力して定義する
 
-がありますが、今回は環境変数でセットします。
+    がありますが、今回は環境変数でセットします。
 
     .. code-block:: bash
 
