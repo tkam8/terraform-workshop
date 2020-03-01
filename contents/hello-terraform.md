@@ -2,7 +2,7 @@
 
 ここではOSS版のTerraformを利用してAWS上に一つインスタンスを作り、それぞれのコンポーネントや用語について説明をします。
 
-Terrformがインストールされていない場合は[こちら](https://www.terraform.io/downloads.html)よりダウンロードをしてください。
+Terraformがインストールされていない場合は[こちら](https://www.terraform.io/downloads.html)よりダウンロードをしてください。
 
 ダウンロードしたらunzipして実行権限を付与し、パスを通します。下記はmacOSの手順です。
 
@@ -242,7 +242,8 @@ lock.json                         terraform-provider-aws_v2.24.0_x4
 次に`plan`と`apply`を実施してインスタンスを作ってみましょう。aws cliでインスタンスの状況確認しておいてください。(GCP/Azureの場合はWebブラウザから確認してください。)
 
 ```console
-$ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
+$ aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId,State:State,Name:Tags[?
+Key=='Name']|[0].Value}"
 [
 
 ]
@@ -309,14 +310,16 @@ $ terraform apply
 Applyが終了するとAWS(or GCP or Azure)のインスタンスが一つ作られていることがわかるでしょう。(GCP/Azureの場合はWebブラウザから確認してください。)
 
 ```console
-$ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
+$ aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId,State:State,Name:Tags[?
+Key=='Name']|[0].Value}"
 [
     {
         "InstanceId": "i-00918d5c9466da418",
         "State": {
             "Code": 48,
             "Name": "running"
-        }
+        },
+        "Name": "xxx"
     }
 ]
 ```
@@ -339,14 +342,16 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
         "State": {
             "Code": 48,
             "Name": "running"
-        }
+        },
+        "Name": "xxx"
     },
     {
         "InstanceId": "i-0b0aea4b4ab27ef4b",
         "State": {
             "Code": 16,
             "Name": "running"
-        }
+        },
+        "Name": "xxx"
     }
 ]
 ```
@@ -368,14 +373,16 @@ $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:Ins
         "State": {
             "Code": 48,
             "Name": "terminated"
-        }
+        },
+        "Name": "xxx"
     },
     {
         "InstanceId": "i-0b0aea4b4ab27ef4b",
         "State": {
             "Code": 16,
             "Name": "terminated"
-        }
+        },
+        "Name": "xxx"
     }
 ]
 ```
