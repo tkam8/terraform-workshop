@@ -52,7 +52,7 @@
         provider "aws" {
             access_key = var.access_key
             secret_key = var.secret_key
-        token      = var.session_token
+            token      = var.session_token
             region     = var.region
         }
 
@@ -111,8 +111,8 @@
 
     .. code-block:: bash
 
-        $ aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId,State:State,Name:Tags[?
-        Key=='Name']|[0].Value}"
+        $ aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId,State:State,Name:Tags[?Key=='Name']|[0].Value}"
+        []
 
 
 
@@ -123,6 +123,8 @@
         AWS Secret Access Key [****************]: ****************
         Default region name [ap-southeast-1]:
         Default output format [json]:
+
+    |class-1-1|
 
 #. `plan`はTerraformによるプロビジョニングの実行プランを計画します。実際の環境やステートファイルとの差分を検出し、どのリソースにどのような変更を行うかを確認することができます。`apply`はプランに基づいたプロビジョニングの実施をするためのコマンドです。
 
@@ -150,8 +152,7 @@
 
     .. code-block:: bash
 
-        $ aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId,State:State,Name:Tags[?
-        Key=='Name']|[0].Value}"
+        $ aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId,State:State,Name:Tags[?Key=='Name']|[0].Value}"
         [
             {
                 "InstanceId": "i-00918d5c9466da418",
@@ -162,6 +163,8 @@
                 "Name": "xxx"
             }
         ]
+
+    |class-1-2|
 
 **Terraform Modification**: 
 ------------------
@@ -175,11 +178,11 @@
         $ terraform apply -auto-approve
 
 
-    .. note::  ちなみに今回は`-auto-approve`というパラメータを使って途中の実行確認を省略しています。AWS(or GCP or Azure)のインスタンスが二つに増えています。Terraformは環境に差分が生じた際はPlanで差分を検出し、差分のみ実施するため既存のリソースには何の影響も及ぼしません。(GCP/Azureの場合はWebブラウザから確認してください。)
+    .. note::  ちなみに今回は`-auto-approve`というパラメータを使って途中の実行確認を省略しています。AWSのインスタンスが二つに増えています。Terraformは環境に差分が生じた際はPlanで差分を検出し、差分のみ実施するため既存のリソースには何の影響も及ぼしません。
 
     .. code-block:: bash
 
-        $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
+        $ aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId,State:State,Name:Tags[?Key=='Name']|[0].Value}"
         [
             {
                 "InstanceId": "i-00918d5c9466da418",
@@ -198,6 +201,9 @@
                 "Name": "xxx"
             }
         ]
+
+
+    |class-1-3|
 
 **Destroy Environment**: 
 ------------------
@@ -212,7 +218,7 @@
 
     .. code-block:: bash
 
-        $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
+        $ aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId,State:State,Name:Tags[?Key=='Name']|[0].Value}"
         [
             {
                 "InstanceId": "i-00918d5c9466da418",
@@ -232,6 +238,7 @@
             }
         ]
 
+    |class-1-4|
 
 **Enterprise版の価値**: 
 ------------------
@@ -252,6 +259,11 @@ Applyが実行されると`terraform.tfstate`というファイルが生成さ�
 - `apply <https://www.terraform.io/docs/commands/apply.html>`_
 - `AWS Provider <https://www.terraform.io/docs/providers/aws/index.html>`_
 
+
+.. |class-1-1| image:: images/class-1-1.png
+.. |class-1-2| image:: images/class-1-2.png
+.. |class-1-3| image:: images/class-1-3.png
+.. |class-1-4| image:: images/class-1-4.png
 
 .. toctree::
    :titlesonly:
