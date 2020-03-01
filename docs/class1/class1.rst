@@ -17,23 +17,23 @@
 
 #. ダウンロードしたらunzipして実行権限を付与し、パスを通します。下記はmacOSの手順です。
 
-.. code-block:: bash
+    .. code-block:: bash
 
-   $ unzip terraform*.zip
-   $ chmod + x terraform
-   $ mv terraform /usr/local/bin
-   $ terraform -version
-   Terraform v0.12.21
+    $ unzip terraform*.zip
+    $ chmod + x terraform
+    $ mv terraform /usr/local/bin
+    $ terraform -version
+    Terraform v0.12.21
 
 
 .. note:: Windowsの場合はこちらのリンクをご参照ください。 https://dev.classmethod.jp/tool/try-terraform-on-windows/
 
 #. 次に任意の作業用ディレクトリを作ります。
 
-.. code-block:: bash
+    .. code-block:: bash
 
-   $ mkdir -p tf-workspace/hello-tf
-   $ cd  tf-workspace/hello-tf
+    $ mkdir -p tf-workspace/hello-tf
+    $ cd  tf-workspace/hello-tf
 
 **Terraform Configuration Files**: 
 ------------------
@@ -42,86 +42,87 @@
 
 `main.tf`と`vaiables.tf`という二つのファイルを作ってみます。`main.tf`はその名の通りTerraformのメインのファイルで、このファイルに記述されている内容がTerraformで実行されます。`variables.tf`は変数を定義するファイルです。各変数にはデフォルト値や型などを指定できます。
 
-.. code-block:: bash
+    .. code-block:: bash
 
-    $ cat <<EOF > main.tf
-    terraform {
-        required_version = "~> 0.12"
-    }
+        $ cat <<EOF > main.tf
+        terraform {
+            required_version = "~> 0.12"
+        }
 
-    provider "aws" {
-        access_key = var.access_key
-        secret_key = var.secret_key
-    token      = var.session_token
-        region     = var.region
-    }
+        provider "aws" {
+            access_key = var.access_key
+            secret_key = var.secret_key
+        token      = var.session_token
+            region     = var.region
+        }
 
-    resource "aws_instance" "hello-tf-instance" {
-    ami = var.ami
-    count = var.hello_tf_instance_count
-    instance_type = var.hello_tf_instance_type
+        resource "aws_instance" "hello-tf-instance" {
+        ami = var.ami
+        count = var.hello_tf_instance_count
+        instance_type = var.hello_tf_instance_type
 
-    tags = {
-        Name = var.instance_name
-    }
-    }
+        tags = {
+            Name = var.instance_name
+        }
+        }
 
-    EOF
+        EOF
 
 #. 次に`variables.tf`ファイルを作ります。
 
-.. code-block:: bash
+    .. code-block:: bash
 
-    $ cat << EOF > variables.tf
-    variable "access_key" {}
-    variable "secret_key" {}
-    variable "session_token" {}
-    variable "region" {}
-    variable "ami" {}
-    variable "instance_name" {}
-    variable "hello_tf_instance_count" {
-        default = 1
-    }
-    variable "hello_tf_instance_type" {
-        default = "t2.micro"
-    }
-    EOF
+        $ cat << EOF > variables.tf
+        variable "access_key" {}
+        variable "secret_key" {}
+        variable "session_token" {}
+        variable "region" {}
+        variable "ami" {}
+        variable "instance_name" {}
+        variable "hello_tf_instance_count" {
+            default = 1
+        }
+        variable "hello_tf_instance_type" {
+            default = "t2.micro"
+        }
+        EOF
 
 **Terraform Commands**: 
 ------------------
 
 #. 二つのファイルができたらそのディレクトリ上でTerraformの初期化処理を行います。`init`処理ではステートファイルの保存先などのバックエンドの設定や必要ばプラグインのインストールを実施します。
 
-.. code-block:: bash
+    .. code-block:: bash
 
-   $ terraform init
+        $ terraform init
 
 #. ここではAWSのプラグインがインストールされるはずです。
 
-.. code-block:: bash
+    .. code-block:: bash
 
-    $  ls -R .terraform/plugins
-    .terraform/plugins:
-    linux_amd64
+        $  ls -R .terraform/plugins
+        .terraform/plugins:
+        linux_amd64
 
-    .terraform/plugins/linux_amd64:
-    lock.json                          terraform-provider-aws_v2.51.0_x4
+        .terraform/plugins/linux_amd64:
+        lock.json                          terraform-provider-aws_v2.51.0_x4
 
 #. 次に`plan`と`apply`を実施してインスタンスを作ってみましょう。AWSのコンソールまたはaws cliでインスタンスの状況確認しておいてください。
 
-.. code-block:: bash
+    .. code-block:: bash
 
-   $ aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId,State:State,Name:Tags[?
-Key=='Name']|[0].Value}"
+    $ aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId,State:State,Name:Tags[?
+    Key=='Name']|[0].Value}"
 
-.. note::　aws cliにログイン出来ていない場合、以下のコマンドでログインしてください。
-　　.. code-block:: bash
 
-    　　 $ aws configure
-        AWS Access Key ID [****************]: ****************
-        AWS Secret Access Key [****************]: ****************
-        Default region name [ap-southeast-1]:
-        Default output format [json]:
+    .. note::　aws cliにログイン出来ていない場合、以下のコマンドでログインしてください。
+    　　.. code-block:: bash
+
+        　　 $ aws configure
+            AWS Access Key ID [****************]: ****************
+            AWS Secret Access Key [****************]: ****************
+            Default region name [ap-southeast-1]:
+            Default output format [json]:
 
 #. `plan`はTerraformによるプロビジョニングの実行プランを計画します。実際の環境やステートファイルとの差分を検出し、どのリソースにどのような変更を行うかを確認することができます。`apply`はプランに基づいたプロビジョニングの実施をするためのコマンドです。
 
@@ -134,97 +135,97 @@ Key=='Name']|[0].Value}"
 
 がありますが、今回は環境変数でセットします。
 
-.. code-block:: bash
+    .. code-block:: bash
 
-    $ export TF_VAR_access_key=************
-    $ export TF_VAR_secret_key=************
-    $ export TF_VAR_session_token=*********
-    $ export TF_VAR_instance_name=<enteryourname>
-    $ export TF_VAR_region=ap-southeast-1
-    $ export TF_VAR_ami=ami-07ce5f60a39f1790e
-    $ terraform plan
-    $ terraform apply
+        $ export TF_VAR_access_key=************
+        $ export TF_VAR_secret_key=************
+        $ export TF_VAR_session_token=*********
+        $ export TF_VAR_instance_name=<enteryourname>
+        $ export TF_VAR_region=ap-southeast-1
+        $ export TF_VAR_ami=ami-07ce5f60a39f1790e
+        $ terraform plan
+        $ terraform apply
 
 #. Applyが終了するとAWSのインスタンスが一つ作られていることがわかるでしょう。AWSのコンソールまたはaws cliでインスタンスの状況確認してください。
 
-.. code-block:: bash
-    $ aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId,State:State,Name:Tags[?
-    Key=='Name']|[0].Value}"
-    [
-        {
-            "InstanceId": "i-00918d5c9466da418",
-            "State": {
-                "Code": 48,
-                "Name": "running"
-            },
-            "Name": "xxx"
-        }
-    ]
+    .. code-block:: bash
+        $ aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId,State:State,Name:Tags[?
+        Key=='Name']|[0].Value}"
+        [
+            {
+                "InstanceId": "i-00918d5c9466da418",
+                "State": {
+                    "Code": 48,
+                    "Name": "running"
+                },
+                "Name": "xxx"
+            }
+        ]
 
 **Terraform Modification**: 
 ------------------
 
 #. 次にインスタンスの数を増やしてみます。`hello_tf_instance_count`の値を上書きして再度実行します。
 
-.. code-block:: bash
-    $ export TF_VAR_hello_tf_instance_count=2 
-    $ terraform plan
-    $ terraform apply -auto-approve
+    .. code-block:: bash
+        $ export TF_VAR_hello_tf_instance_count=2 
+        $ terraform plan
+        $ terraform apply -auto-approve
 
 
 .. note::  ちなみに今回は`-auto-approve`というパラメータを使って途中の実行確認を省略しています。AWS(or GCP or Azure)のインスタンスが二つに増えています。Terraformは環境に差分が生じた際はPlanで差分を検出し、差分のみ実施するため既存のリソースには何の影響も及ぼしません。(GCP/Azureの場合はWebブラウザから確認してください。)
 
-.. code-block:: bash
-    $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
-    [
-        {
-            "InstanceId": "i-00918d5c9466da418",
-            "State": {
-                "Code": 48,
-                "Name": "running"
+    .. code-block:: bash
+        $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
+        [
+            {
+                "InstanceId": "i-00918d5c9466da418",
+                "State": {
+                    "Code": 48,
+                    "Name": "running"
+                },
+                "Name": "xxx"
             },
-            "Name": "xxx"
-        },
-        {
-            "InstanceId": "i-0b0aea4b4ab27ef4b",
-            "State": {
-                "Code": 16,
-                "Name": "running"
-            },
-            "Name": "xxx"
-        }
-    ]
+            {
+                "InstanceId": "i-0b0aea4b4ab27ef4b",
+                "State": {
+                    "Code": 16,
+                    "Name": "running"
+                },
+                "Name": "xxx"
+            }
+        ]
 
 **Destroy Environment**: 
 ------------------
 
 #. 次に`destroy`で環境をリセットします。
 
-.. code-block:: bash
-   $ terraform destroy 
+    .. code-block:: bash
+        $ terraform destroy 
 
 #. 実行ししばらくするとEC2インスタンスが`terminated`の状態になってることがわかるはずです。
 
-.. code-block:: bash
-    $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
-    [
-        {
-            "InstanceId": "i-00918d5c9466da418",
-            "State": {
-                "Code": 48,
-                "Name": "terminated"
+    .. code-block:: bash
+        $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
+        [
+            {
+                "InstanceId": "i-00918d5c9466da418",
+                "State": {
+                    "Code": 48,
+                    "Name": "terminated"
+                },
+                "Name": "xxx"
             },
-            "Name": "xxx"
-        },
-        {
-            "InstanceId": "i-0b0aea4b4ab27ef4b",
-            "State": {
-                "Code": 16,
-                "Name": "terminated"
-            },
-            "Name": "xxx"
-        }
-    ]
+            {
+                "InstanceId": "i-0b0aea4b4ab27ef4b",
+                "State": {
+                    "Code": 16,
+                    "Name": "terminated"
+                },
+                "Name": "xxx"
+            }
+        ]
 
 
 **Enterprise版の価値**: 
