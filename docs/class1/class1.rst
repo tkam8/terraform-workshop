@@ -19,14 +19,14 @@
 
     .. code-block:: bash
 
-    $ unzip terraform*.zip
-    $ chmod + x terraform
-    $ mv terraform /usr/local/bin
-    $ terraform -version
-    Terraform v0.12.21
+        $ unzip terraform*.zip
+        $ chmod + x terraform
+        $ mv terraform /usr/local/bin
+        $ terraform -version
+        Terraform v0.12.21
 
 
-.. note:: Windowsの場合はこちらのリンクをご参照ください。 https://dev.classmethod.jp/tool/try-terraform-on-windows/
+    .. note:: Windowsの場合はこちらのリンクをご参照ください。 https://dev.classmethod.jp/tool/try-terraform-on-windows/
 
 #. 次に任意の作業用ディレクトリを作ります。
 
@@ -115,8 +115,10 @@
         Key=='Name']|[0].Value}"
 
 
+
     .. note::　aws cliにログイン出来ていない場合、以下のコマンドでログインしてください。
-    　　 $ aws configure
+    　　 
+        $ aws configure
         AWS Access Key ID [****************]: ****************
         AWS Secret Access Key [****************]: ****************
         Default region name [ap-southeast-1]:
@@ -147,6 +149,7 @@
 #. Applyが終了するとAWSのインスタンスが一つ作られていることがわかるでしょう。AWSのコンソールまたはaws cliでインスタンスの状況確認してください。
 
     .. code-block:: bash
+
         $ aws ec2 describe-instances --query "Reservations[*].Instances[*].{InstanceId:InstanceId,State:State,Name:Tags[?
         Key=='Name']|[0].Value}"
         [
@@ -166,6 +169,7 @@
 #. 次にインスタンスの数を増やしてみます。`hello_tf_instance_count`の値を上書きして再度実行します。
 
     .. code-block:: bash
+
         $ export TF_VAR_hello_tf_instance_count=2 
         $ terraform plan
         $ terraform apply -auto-approve
@@ -174,6 +178,7 @@
 .. note::  ちなみに今回は`-auto-approve`というパラメータを使って途中の実行確認を省略しています。AWS(or GCP or Azure)のインスタンスが二つに増えています。Terraformは環境に差分が生じた際はPlanで差分を検出し、差分のみ実施するため既存のリソースには何の影響も及ぼしません。(GCP/Azureの場合はWebブラウザから確認してください。)
 
     .. code-block:: bash
+
         $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
         [
             {
@@ -200,11 +205,13 @@
 #. 次に`destroy`で環境をリセットします。
 
     .. code-block:: bash
+
         $ terraform destroy 
 
 #. 実行ししばらくするとEC2インスタンスが`terminated`の状態になってることがわかるはずです。
 
     .. code-block:: bash
+
         $ aws ec2 describe-instances --query "Reservations[].Instances[].{InstanceId:InstanceId,State:State}"
         [
             {
@@ -237,6 +244,7 @@ Applyが実行されると`terraform.tfstate`というファイルが生成さ�
 
 
 **参考リンク**
+
 - `State <https://www.terraform.io/docs/state/index.html>`_
 - `Backends <https://www.terraform.io/docs/backends/index.html>`_
 - `init <https://www.terraform.io/docs/commands/init.html>`_
