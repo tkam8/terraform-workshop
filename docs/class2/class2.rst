@@ -78,7 +78,7 @@ Terraform cloudにはRemote State管理機能があります。ちなみに、**
 
   |class-2-6|
 
-#. 次に、ここで作成されたTokenをLocal環境の `~/.terraformrc` に書き込みます。
+#. 次に、ここで作成されたTokenをLocal環境の ``~/.terraformrc`` に書き込みます。
 
     .. note:: Windowsの場合、%APPDATA%\terraform.rcとなります。
 
@@ -95,7 +95,7 @@ Terraform cloudにはRemote State管理機能があります。ちなみに、**
 **Remote Backendの設定**
 ----------------
 
-#. つぎにTerraformにRemote Backendを使用するコードを追加します。以下のコードを `remote_backend.tf` という名前で作成してください。 **YOURORGANIZATION** は使用しているOrganizationの値に、 **YOURWORKSPACE** は使用しているWorkspaceに置き換えてください。
+#. つぎにTerraformにRemote Backendを使用するコードを追加します。以下のコードを ``remote_backend.tf`` という名前で作成してください。 **YOURORGANIZATION** は使用しているOrganizationの値に、 **YOURWORKSPACE** は使用しているWorkspaceに置き換えてください。
 
     .. code-block:: hcl
 
@@ -141,14 +141,14 @@ Terraform cloudにはRemote State管理機能があります。ちなみに、**
 
     |class-2-7|
 
-#. それでは `apply` してみましょう。
+#. それでは ``apply`` してみましょう。
 
     .. code-block:: bash
 
         terraform apply
 
 
-#. この `apply` ではLocalのStateファイルではなく、Terraform cloud上のStateファイルを使用します。よって、もうLocalのStateファイルは必要ないので削除しても構いません。
+#. この ``apply`` ではLocalのStateファイルではなく、Terraform cloud上のStateファイルを使用します。よって、もうLocalのStateファイルは必要ないので削除しても構いません。
 
 **まとめ**
 ----------------
