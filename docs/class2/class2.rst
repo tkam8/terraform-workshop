@@ -11,6 +11,8 @@ Stateファイルは非常に重要なファイルで様々な情報がつまっ
 
 Terraformで継続的にProvisioningを行なうためにはStateファイルの管理が必至です。Terraformはデフォルトの挙動として、実行されて得たStateファイルをLocal環境に保存します。ただ、Local環境でStateファイルを管理するにはいくつかの問題があります。
 
+|class-2-8| 
+
 - 個人のLocal環境だけに存在すると、チームでの作業が出来ない
   - 例えばAさんのローカルマシン上にだけStateファイルがある場合、Aさん以外の人はその環境にたいして、それ以上のProvisioningが出来ない。
 - 誤って削除してしまうと元に戻せない（よって全てのインフラ情報が損失してしまう）
@@ -166,3 +168,4 @@ Terraform cloudにはRemote State管理機能があります。ちなみに、**
 .. |class-2-5| image:: images/class-2-5.png
 .. |class-2-6| image:: images/class-2-6.png
 .. |class-2-7| image:: images/class-2-7.png
+.. |class-2-8| image:: images/class-2-8.png
