@@ -68,15 +68,15 @@ Terraform cloudにはRemote State管理機能があります。ちなみに、**
 
 #. 右上の自分のアイコンをクリックして **User Settings** を選択します。
 
-  |class-2-4|
+    |class-2-4|
 
 #. そこから、**Tokens** メニューから **Create an API Token** ボタンでUser Tokenを作成します。DescriptionにはこのTokenについての說明を追加できます。
 
-  |class-2-5|
+    |class-2-5|
 
 #. 作成されたTokenはこの画面でしか表示されないので、必ずコピーもしくはDownloadしておいてください。
 
-  |class-2-6|
+    |class-2-6|
 
 #. 次に、ここで作成されたTokenをLocal環境の ``~/.terraformrc`` に書き込みます。
 
