@@ -27,7 +27,7 @@ Terraform Cloud及びTerraform Enterpriseにはこれらの問題を解決すべ
 
 1. このWorkshopを行なうにはTerraform Cloudのアカウントが必要です。こちらからサインアップをしてください。（すでにアカウントをお持ちの方はスキップしてください。）
 
-[https://app.terraform.io/signup/account](https://app.terraform.io/signup/account)
+<https://app.terraform.io/signup/account>
 
 **Remote State管理機能**
 ----------------
@@ -43,7 +43,7 @@ Terraform cloudにはRemote State管理機能があります。ちなみに、**
    ワークスペース名は任意で構いません。
 
 
-    .. note:: 1つのOrganization内では全てのWorkspace名が一意である必要がありますので、複数のユーザーで作業する場合、Workspace名がユニークになるようにしてください。**
+    .. note:: **1つのOrganization内では全てのWorkspace名が一意である必要がありますので、複数のユーザーで作業する場合、Workspace名がユニークになるようにしてください。**
 
    Workspaceは以下のボタンより作成できます。
 
@@ -53,9 +53,9 @@ Terraform cloudにはRemote State管理機能があります。ちなみに、**
 
    |class-2-2|
 
-   Workspace名にには重複しない任意の名前をつけてください。以下、このページでは、ここで指定した名前を*YOURWORKSPACE*という置き換え表示で表します。
+   Workspace名にには重複しない任意の名前をつけてください。以下、このページでは、ここで指定した名前を**YOURWORKSPACE**という置き換え表示で表します。
 
-#. つぎに、Workspaceの**Setting > General >** にナビゲートし、Execution modeを**Local**に設定して保存してください。
+#. つぎに、Workspaceの**Setting** > **General** > にナビゲートし、Execution modeを**Local**に設定して保存してください。
 
    |class-2-3|
 
@@ -95,7 +95,7 @@ Terraform cloudにはRemote State管理機能があります。ちなみに、**
 **Remote Backendの設定**
 ----------------
 
-#. つぎにTerraformにRemote Backendを使用するコードを追加します。以下のコードを```remote_backend.tf```という名前で作成してください。*YOURORGANIZATION*は使用しているOrganizationの値に、*YOURWORKSPACE*は使用しているWorkspaceに置き換えてください。
+#. つぎにTerraformにRemote Backendを使用するコードを追加します。以下のコードを``remote_backend.tf``という名前で作成してください。*YOURORGANIZATION*は使用しているOrganizationの値に、*YOURWORKSPACE*は使用しているWorkspaceに置き換えてください。
 
     .. code-block:: hcl
 
@@ -117,7 +117,7 @@ Terraform cloudにはRemote State管理機能があります。ちなみに、**
        terraform init
 
 
-#. ここで、もし直前のWorkshopで作成されたStateファイルが存在していると以下のように、「既存StateファイルをRemote Backendにコピーするか？」と尋ねられます。*Yes* と入力して下さい。
+#. ここで、もし直前のWorkshopで作成されたStateファイルが存在していると以下のように、「既存StateファイルをRemote Backendにコピーするか？」と尋ねられます。**Yes** と入力して下さい。
 
     .. code-block:: bash
 
@@ -141,14 +141,14 @@ Terraform cloudにはRemote State管理機能があります。ちなみに、**
 
     |class-2-7|
 
-#. それでは```apply```してみましょう。
+#. それでは``apply``してみましょう。
 
     .. code-block:: bash
 
         terraform apply
 
 
-#. この```apply```ではLocalのStateファイルではなく、Terraform cloud上のStateファイルを使用します。よって、もうLocalのStateファイルは必要ないので削除しても構いません。
+#. この``apply``ではLocalのStateファイルではなく、Terraform cloud上のStateファイルを使用します。よって、もうLocalのStateファイルは必要ないので削除しても構いません。
 
 **まとめ**
 ----------------
@@ -157,7 +157,7 @@ Terraform cloudにはRemote State管理機能があります。ちなみに、**
 
 ただ、Stateファイルの共有が実現できたとしてもまだまだチーム利用としては足りない機能が多々あります。それらを次からのWorkshopで見ていきたいと思います。
 
-https://github.com/hashicorp-japan/terraform-workshop/tree/master/contents
+<https://github.com/hashicorp-japan/terraform-workshop/tree/master/contents>
 
 .. |class-2-1| image:: images/class-2-1.png
 .. |class-2-2| image:: images/class-2-2.png
