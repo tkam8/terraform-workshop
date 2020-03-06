@@ -139,18 +139,18 @@ Terraform cloudにはRemote State管理機能があります。ちなみに、**
         use this backend unless the backend configuration changes.
 
 
-#. この段階で、Terraform cloudのWorkspaceを確認すると、Stateファイルが作成されているはずです。
-
-    |class-2-7|
-
 #. それでは ``apply`` してみましょう。
 
     .. code-block:: bash
 
         terraform apply
 
+    この ``apply`` ではLocalのStateファイルではなく、Terraform cloud上のStateファイルを使用します。よって、もうLocalのStateファイルは必要ないので削除しても構いません。
 
-#. この ``apply`` ではLocalのStateファイルではなく、Terraform cloud上のStateファイルを使用します。よって、もうLocalのStateファイルは必要ないので削除しても構いません。
+#. この段階で、Terraform cloudのWorkspaceを確認すると、Stateファイルが作成されているはずです。
+
+    |class-2-7|
+ 
 
 **まとめ**
 ----------------
